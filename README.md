@@ -76,6 +76,7 @@ $ secrets-scan scan .
 
 ---
 
+<a id="installation"></a>
 ## 📦 Installation
 
 ```bash
@@ -99,6 +100,9 @@ docker pull ghcr.io/Quarrezz/dotenv-secrets-scanner:latest
 # Run scan on current directory
 docker run --rm -v $(pwd):/app ghcr.io/Quarrezz/dotenv-secrets-scanner scan .
 ```
+
+<a id="usage"></a>
+## 🚀 Usage
 
 ### Basic Scan
 
@@ -190,6 +194,7 @@ secrets-scan init
 
 ---
 
+<a id="what-does-it-find"></a>
 ## 🔍 What Does It Find?
 
 ### 🔴 Critical (CRITICAL)
@@ -233,6 +238,7 @@ secrets-scan init
 
 ---
 
+<a id="how-it-works"></a>
 ## 🧠 How It Works
 
 Scanner uses a 3-layer detection system:
@@ -269,6 +275,7 @@ Scanner uses a 3-layer detection system:
 
 ---
 
+<a id="configuration"></a>
 ## ⚙️ Configuration
 
 ### `.secretsignore` File
