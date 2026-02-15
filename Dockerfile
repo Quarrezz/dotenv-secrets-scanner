@@ -16,6 +16,10 @@ COPY . .
 # Install the package
 RUN pip install --no-cache-dir .
 
+# Create a non-root user
+RUN useradd -m appuser
+USER appuser
+
 # Set the entrypoint to the scanner CLI
 ENTRYPOINT ["secrets-scan"]
 
