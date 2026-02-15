@@ -1,0 +1,5 @@
+- id: dotenv-secrets-scan
+  name: Dotenv Secrets Scanner
+  entry: secrets-scan
+  language: python
+  types: [text]

@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+cleanenv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+*.sarif
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Project specific
+.secrets-cache/
+
+# Scan Reports
+report.json
+report.html
+report.txt
+*.report.json
+*.report.html
+
+# Baseline
+baseline.json
+
+# Logs
+*.log
+
+# Python packaging
+pip-wheel-metadata/
+
+# Coverage
+coverage.xml
+
+# Bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local env
+.env

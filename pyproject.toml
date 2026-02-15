@@ -1,0 +1,103 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dotenv-secrets-scanner"
+version = "1.0.0"
+description = "Production-ready secrets scanner for Git repositories. Detects API keys, passwords, tokens, and credentials accidentally committed to source code."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [
+    { name = "Quarrezz" },
+]
+keywords = [
+    "security",
+    "secrets",
+    "scanner",
+    "git",
+    "pre-commit",
+    "devsecops",
+    "api-keys",
+    "credentials",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: Software Development :: Quality Assurance",
+    "Typing :: Typed",
+]
+dependencies = [
+    "click>=8.0,<9.0",
+    "rich>=13.0,<14.0",
+    "gitpython>=3.1,<4.0",
+    "pyyaml>=6.0,<7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+    "types-PyYAML>=6.0",
+    "mypy>=1.0",
+]
+
+[project.scripts]
+secrets-scan = "scanner.cli.main:cli"
+dotenv-secrets-scanner = "scanner.cli.main:cli"
+
+[project.urls]
+Homepage = "https://github.com/Quarrezz/dotenv-secrets-scanner"
+Documentation = "https://github.com/Quarrezz/dotenv-secrets-scanner/docs"
+Repository = "https://github.com/Quarrezz/dotenv-secrets-scanner"
+Issues = "https://github.com/Quarrezz/dotenv-secrets-scanner/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/scanner"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/scanner/**", "LICENSE", "README.md"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "TCH",  # flake8-type-checking
+    "RUF",  # ruff-specific
+]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
