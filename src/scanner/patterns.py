@@ -114,6 +114,7 @@ class PatternRegistry:
 # DEFAULT PATTERNS — Built-in secret detectors
 # ---------------------------------------------------------------------------
 
+
 def _build_default_patterns() -> list[SecretPattern]:
     """Build and return all default secret patterns.
 
@@ -127,9 +128,7 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="aws-access-key",
             name="AWS Access Key",
-            pattern=re.compile(
-                r"(?:^|[^A-Za-z0-9/+=])(AKIA[0-9A-Z]{16})(?:[^A-Za-z0-9/+=]|$)"
-            ),
+            pattern=re.compile(r"(?:^|[^A-Za-z0-9/+=])(AKIA[0-9A-Z]{16})(?:[^A-Za-z0-9/+=]|$)"),
             severity=Severity.CRITICAL,
             confidence=0.95,
             description="AWS Access Key ID beginning with AKIA.",
@@ -158,9 +157,7 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="github-pat",
             name="GitHub Personal Access Token",
-            pattern=re.compile(
-                r"(?:^|[^A-Za-z0-9_])(ghp_[A-Za-z0-9]{36,255})(?:[^A-Za-z0-9_]|$)"
-            ),
+            pattern=re.compile(r"(?:^|[^A-Za-z0-9_])(ghp_[A-Za-z0-9]{36,255})(?:[^A-Za-z0-9_]|$)"),
             severity=Severity.CRITICAL,
             confidence=0.95,
             description="GitHub Personal Access Token (ghp_ prefix).",
@@ -170,9 +167,7 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="github-oauth",
             name="GitHub OAuth Access Token",
-            pattern=re.compile(
-                r"(?:^|[^A-Za-z0-9_])(gho_[A-Za-z0-9]{36,255})(?:[^A-Za-z0-9_]|$)"
-            ),
+            pattern=re.compile(r"(?:^|[^A-Za-z0-9_])(gho_[A-Za-z0-9]{36,255})(?:[^A-Za-z0-9_]|$)"),
             severity=Severity.CRITICAL,
             confidence=0.95,
             description="GitHub OAuth Access Token (gho_ prefix).",
@@ -182,9 +177,7 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="github-app-token",
             name="GitHub App Token",
-            pattern=re.compile(
-                r"(?:^|[^A-Za-z0-9_])(ghs_[A-Za-z0-9]{36,255})(?:[^A-Za-z0-9_]|$)"
-            ),
+            pattern=re.compile(r"(?:^|[^A-Za-z0-9_])(ghs_[A-Za-z0-9]{36,255})(?:[^A-Za-z0-9_]|$)"),
             severity=Severity.CRITICAL,
             confidence=0.95,
             description="GitHub App Installation Token (ghs_ prefix).",
@@ -218,9 +211,7 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="private-ssh-key",
             name="Private SSH Key",
-            pattern=re.compile(
-                r"-----BEGIN\s(?:RSA|DSA|EC|OPENSSH|PGP)\sPRIVATE\sKEY-----"
-            ),
+            pattern=re.compile(r"-----BEGIN\s(?:RSA|DSA|EC|OPENSSH|PGP)\sPRIVATE\sKEY-----"),
             severity=Severity.CRITICAL,
             confidence=0.99,
             description="Private SSH/PGP key header detected.",
@@ -258,7 +249,6 @@ def _build_default_patterns() -> list[SecretPattern]:
                 re.compile(r"localhost|127\.0\.0\.1|example\.com|mysql://user:pass@"),
             ),
         ),
-
         # ===================================================================
         # HIGH — Significant service access
         # ===================================================================
@@ -279,8 +269,7 @@ def _build_default_patterns() -> list[SecretPattern]:
             id="openai-api-key-v2",
             name="OpenAI API Key (Project)",
             pattern=re.compile(
-                r"(?:^|[^A-Za-z0-9_-])(sk-proj-[A-Za-z0-9_-]{40,255})"
-                r"(?:[^A-Za-z0-9_-]|$)"
+                r"(?:^|[^A-Za-z0-9_-])(sk-proj-[A-Za-z0-9_-]{40,255})" r"(?:[^A-Za-z0-9_-]|$)"
             ),
             severity=Severity.HIGH,
             confidence=0.90,
@@ -291,9 +280,7 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="google-api-key",
             name="Google API Key",
-            pattern=re.compile(
-                r"(?:^|[^A-Za-z0-9_])(AIza[0-9A-Za-z_-]{35})(?:[^A-Za-z0-9_-]|$)"
-            ),
+            pattern=re.compile(r"(?:^|[^A-Za-z0-9_])(AIza[0-9A-Za-z_-]{35})(?:[^A-Za-z0-9_-]|$)"),
             severity=Severity.HIGH,
             confidence=0.85,
             description="Google API key starting with AIza.",
@@ -385,9 +372,7 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="npm-token",
             name="NPM Access Token",
-            pattern=re.compile(
-                r"(?:^|[^A-Za-z0-9_])(npm_[A-Za-z0-9]{36})(?:[^A-Za-z0-9_]|$)"
-            ),
+            pattern=re.compile(r"(?:^|[^A-Za-z0-9_])(npm_[A-Za-z0-9]{36})(?:[^A-Za-z0-9_]|$)"),
             severity=Severity.HIGH,
             confidence=0.95,
             description="NPM access token.",
@@ -397,16 +382,13 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="pypi-token",
             name="PyPI API Token",
-            pattern=re.compile(
-                r"(?:^|[^A-Za-z0-9_])(pypi-[A-Za-z0-9_-]{50,})(?:[^A-Za-z0-9_-]|$)"
-            ),
+            pattern=re.compile(r"(?:^|[^A-Za-z0-9_])(pypi-[A-Za-z0-9_-]{50,})(?:[^A-Za-z0-9_-]|$)"),
             severity=Severity.HIGH,
             confidence=0.95,
             description="PyPI API token.",
             secret_group=1,
             false_positive_patterns=_PLACEHOLDER_FP,
         ),
-
         # ===================================================================
         # MEDIUM — Limited access / moderate risk
         # ===================================================================
@@ -428,9 +410,7 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="gcp-service-account",
             name="GCP Service Account Key",
-            pattern=re.compile(
-                r'"type"\s*:\s*"service_account"'
-            ),
+            pattern=re.compile(r'"type"\s*:\s*"service_account"'),
             severity=Severity.MEDIUM,
             confidence=0.85,
             description="Google Cloud service account JSON key file marker.",
@@ -439,9 +419,7 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="docker-registry-auth",
             name="Docker Registry Auth",
-            pattern=re.compile(
-                r'"auth"\s*:\s*"([A-Za-z0-9+/=]{20,})"'
-            ),
+            pattern=re.compile(r'"auth"\s*:\s*"([A-Za-z0-9+/=]{20,})"'),
             severity=Severity.MEDIUM,
             confidence=0.70,
             description="Docker registry base64-encoded auth token.",
@@ -468,8 +446,7 @@ def _build_default_patterns() -> list[SecretPattern]:
             id="generic-password-assignment",
             name="Generic Password Assignment",
             pattern=re.compile(
-                r"(?:password|passwd|pwd|pass)"
-                r"""[\s]*[=:]\s*['"]([^'"]{8,128})['"]""",
+                r"(?:password|passwd|pwd|pass)" r"""[\s]*[=:]\s*['"]([^'"]{8,128})['"]""",
                 re.IGNORECASE,
             ),
             severity=Severity.MEDIUM,
@@ -501,15 +478,12 @@ def _build_default_patterns() -> list[SecretPattern]:
         SecretPattern(
             id="private-key-generic",
             name="Generic Private Key",
-            pattern=re.compile(
-                r"-----BEGIN\s(?:PRIVATE\sKEY|ENCRYPTED\sPRIVATE\sKEY)-----"
-            ),
+            pattern=re.compile(r"-----BEGIN\s(?:PRIVATE\sKEY|ENCRYPTED\sPRIVATE\sKEY)-----"),
             severity=Severity.MEDIUM,
             confidence=0.95,
             description="Generic PKCS#8 private key header.",
             secret_group=0,
         ),
-
         # ===================================================================
         # TURKISH PROVIDERS — Unique value-add
         # ===================================================================
@@ -590,7 +564,6 @@ def _build_default_patterns() -> list[SecretPattern]:
             false_positive_patterns=_PLACEHOLDER_FP,
             entropy_threshold=3.0,
         ),
-
         # ===================================================================
         # LOW — Informational / weak signals
         # ===================================================================

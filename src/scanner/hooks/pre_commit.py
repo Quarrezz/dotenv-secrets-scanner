@@ -168,9 +168,7 @@ def _resolve_repo_root(repo_path: Path | None) -> Path:
 
     root = get_repo_root(repo_path)
     if root is None:
-        raise FileNotFoundError(
-            f"No Git repository found at or above: {repo_path}"
-        )
+        raise FileNotFoundError(f"No Git repository found at or above: {repo_path}")
     return root
 
 

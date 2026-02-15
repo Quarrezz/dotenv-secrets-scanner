@@ -17,26 +17,28 @@ from scanner.entropy import calculate_shannon_entropy, entropy_score
 # Well-known placeholder / example values that are NOT secrets
 # ---------------------------------------------------------------------------
 
-_KNOWN_SAFE_VALUES: frozenset[str] = frozenset({
-    # AWS documentation examples
-    "AKIAIOSFODNN7EXAMPLE",
-    "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
-    # Generic placeholders
-    "your-api-key-here",
-    "your_api_key",
-    "replace-me",
-    "changeme",
-    "password",
-    "password123",
-    "p@ssw0rd",
-    "admin",
-    "root",
-    "test",
-    "demo",
-    # Common in documentation
-    "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-})
+_KNOWN_SAFE_VALUES: frozenset[str] = frozenset(
+    {
+        # AWS documentation examples
+        "AKIAIOSFODNN7EXAMPLE",
+        "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+        # Generic placeholders
+        "your-api-key-here",
+        "your_api_key",
+        "replace-me",
+        "changeme",
+        "password",
+        "password123",
+        "p@ssw0rd",
+        "admin",
+        "root",
+        "test",
+        "demo",
+        # Common in documentation
+        "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    }
+)
 
 _SAFE_VALUE_PATTERNS: tuple[re.Pattern[str], ...] = tuple(
     re.compile(p, re.IGNORECASE)

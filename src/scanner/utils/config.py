@@ -29,9 +29,7 @@ CONFIG_FILE_NAMES = (
     "secretscan.yaml",
 )
 
-SECRETSIGNORE_FILE_NAMES = (
-    ".secretsignore",
-)
+SECRETSIGNORE_FILE_NAMES = (".secretsignore",)
 
 
 def find_config_file(search_dir: Path) -> Path | None:
@@ -216,6 +214,7 @@ def _apply_file_config(config: ScanConfig, data: dict[str, Any]) -> ScanConfig:
 
             try:
                 import re
+
                 compiled = re.compile(pattern_str)
             except re.error as exc:
                 logger.warning("Invalid regex in custom pattern '%s': %s", pattern_str, exc)

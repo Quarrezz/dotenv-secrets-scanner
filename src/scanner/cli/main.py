@@ -162,25 +162,29 @@ def cli(ctx: click.Context) -> None:
 @cli.command()
 @click.argument("path", default=".", type=click.Path(exists=True))
 @click.option(
-    "--severity", "-s",
+    "--severity",
+    "-s",
     type=click.Choice(["LOW", "MEDIUM", "HIGH", "CRITICAL"], case_sensitive=False),
     default=None,
     help="Minimum severity level to report.",
 )
 @click.option(
-    "--output", "-o",
+    "--output",
+    "-o",
     type=click.Choice(["console", "json", "text", "html", "sarif"], case_sensitive=False),
     default="console",
     help="Output format.",
 )
 @click.option(
-    "--output-file", "-f",
+    "--output-file",
+    "-f",
     type=click.Path(),
     default=None,
     help="Write report to a file.",
 )
 @click.option(
-    "--git-history", "-g",
+    "--git-history",
+    "-g",
     is_flag=True,
     default=False,
     help="Scan Git commit history.",
@@ -192,7 +196,8 @@ def cli(ctx: click.Context) -> None:
     help="Max commits to scan in git history mode.",
 )
 @click.option(
-    "--config", "-c",
+    "--config",
+    "-c",
     type=click.Path(exists=True),
     default=None,
     help="Path to configuration file (.secretscan.yml).",
@@ -204,7 +209,8 @@ def cli(ctx: click.Context) -> None:
     help="Max file size in bytes to scan.",
 )
 @click.option(
-    "--exclude", "-e",
+    "--exclude",
+    "-e",
     multiple=True,
     help="Additional directories to exclude.",
 )
@@ -215,7 +221,8 @@ def cli(ctx: click.Context) -> None:
     help="Disable colored output.",
 )
 @click.option(
-    "--verbose", "-v",
+    "--verbose",
+    "-v",
     is_flag=True,
     default=False,
     help="Enable verbose logging.",
@@ -429,7 +436,8 @@ def scan(
 
 @cli.command("install-hook")
 @click.option(
-    "--repo", "-r",
+    "--repo",
+    "-r",
     type=click.Path(exists=True),
     default=".",
     help="Path to the Git repository.",
@@ -455,7 +463,8 @@ def install_hook(repo: str) -> None:
 
 @cli.command("uninstall-hook")
 @click.option(
-    "--repo", "-r",
+    "--repo",
+    "-r",
     type=click.Path(exists=True),
     default=".",
     help="Path to the Git repository.",
@@ -477,7 +486,8 @@ def uninstall_hook(repo: str) -> None:
 
 @cli.command()
 @click.option(
-    "--path", "-p",
+    "--path",
+    "-p",
     type=click.Path(),
     default=".",
     help="Directory to create .secretsignore in.",
@@ -491,9 +501,11 @@ def init(path: str) -> None:
     """
     target = Path(path).resolve() / ".secretsignore"
 
-    if target.exists() and not click.confirm(f".secretsignore already exists at {target}. Overwrite?"):
-            console.print("[dim]Aborted.[/]")
-            return
+    if target.exists() and not click.confirm(
+        f".secretsignore already exists at {target}. Overwrite?"
+    ):
+        console.print("[dim]Aborted.[/]")
+        return
 
     content = """\
 # .secretsignore - Suppress known false positives
@@ -519,7 +531,8 @@ def init(path: str) -> None:
 
 @cli.command("patterns")
 @click.option(
-    "--severity", "-s",
+    "--severity",
+    "-s",
     type=click.Choice(["LOW", "MEDIUM", "HIGH", "CRITICAL"], case_sensitive=False),
     default=None,
     help="Minimum severity level to include.",

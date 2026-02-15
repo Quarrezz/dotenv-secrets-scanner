@@ -317,19 +317,17 @@ class SARIFReportGenerator(ReportGenerator):
         for finding in result.findings:
             # Add rule if not already present
             if finding.pattern_id not in rules_added:
-                driver_rules.append({
-                    "id": finding.pattern_id,
-                    "name": finding.pattern_name,
-                    "shortDescription": {
-                        "text": finding.pattern_name
-                    },
-                    "fullDescription": {
-                        "text": finding.description or finding.pattern_name
-                    },
-                    "properties": {
-                        "precision": "high" if finding.confidence > 0.8 else "medium"
+                driver_rules.append(
+                    {
+                        "id": finding.pattern_id,
+                        "name": finding.pattern_name,
+                        "shortDescription": {"text": finding.pattern_name},
+                        "fullDescription": {"text": finding.description or finding.pattern_name},
+                        "properties": {
+                            "precision": "high" if finding.confidence > 0.8 else "medium"
+                        },
                     }
-                })
+                )
                 rules_added.add(finding.pattern_id)
 
             # Create SARIF result
@@ -339,38 +337,42 @@ class SARIFReportGenerator(ReportGenerator):
                 "message": {
                     "text": f"Secret detected: {finding.pattern_name}. Confidence: {finding.confidence:.0%}"
                 },
-                "locations": [{
-                    "physicalLocation": {
-                        "artifactLocation": {
-                            "uri": finding.file_path.replace("\\", "/")
-                        },
-                        "region": {
-                            "startLine": finding.line_number,
-                            "startColumn": 1,
+                "locations": [
+                    {
+                        "physicalLocation": {
+                            "artifactLocation": {"uri": finding.file_path.replace("\\", "/")},
+                            "region": {
+                                "startLine": finding.line_number,
+                                "startColumn": 1,
+                            },
                         }
                     }
-                }]
+                ],
             }
             results.append(sarif_result)
 
         report_data = {
             "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
             "version": "2.1.0",
-            "runs": [{
-                "tool": {
-                    "driver": {
-                        "name": "dotenv-secrets-scanner",
-                        "version": __version__,
-                        "informationUri": "https://github.com/Quarrezz/dotenv-secrets-scanner",
-                        "rules": driver_rules
-                    }
-                },
-                "results": results,
-                "invocations": [{
-                    "executionSuccessful": True,
-                    "endTimeUtc": datetime.now(timezone.utc).isoformat()
-                }]
-            }]
+            "runs": [
+                {
+                    "tool": {
+                        "driver": {
+                            "name": "dotenv-secrets-scanner",
+                            "version": __version__,
+                            "informationUri": "https://github.com/Quarrezz/dotenv-secrets-scanner",
+                            "rules": driver_rules,
+                        }
+                    },
+                    "results": results,
+                    "invocations": [
+                        {
+                            "executionSuccessful": True,
+                            "endTimeUtc": datetime.now(timezone.utc).isoformat(),
+                        }
+                    ],
+                }
+            ],
         }
 
         json_str = json.dumps(report_data, indent=2)

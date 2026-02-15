@@ -95,10 +95,7 @@ class SecretScanner:
                 self._scan_file_safe(file_path, result)
         else:
             with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
-                futures = {
-                    executor.submit(self.scan_file, fp): fp
-                    for fp in files_to_scan
-                }
+                futures = {executor.submit(self.scan_file, fp): fp for fp in files_to_scan}
                 for future in as_completed(futures):
                     file_path = futures[future]
                     try:
@@ -337,7 +334,7 @@ class SecretScanner:
             and file_path.name.startswith(".")
             and not file_path.name.startswith(".env")
         ):
-                return True
+            return True
 
         # Size check
         try:
@@ -457,7 +454,7 @@ class SecretScanner:
                     and (fnmatch(file_path, parts[0]) or parts[0] == "*")
                     and (parts[1] == "*" or parts[1] == str(line_number))
                 ):
-                            return True
+                    return True
 
         return False
 
