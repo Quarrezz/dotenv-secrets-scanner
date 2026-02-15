@@ -22,7 +22,7 @@ from rich.text import Text
 
 from scanner import __version__
 from scanner.core import SecretScanner
-from scanner.models import ScanConfig, ScanResult, Severity
+from scanner.models import ScanResult, Severity
 from scanner.patterns import create_default_registry
 from scanner.reports import generate_report
 from scanner.utils.config import load_config, merge_cli_args
@@ -73,12 +73,12 @@ def _print_findings(result: ScanResult) -> None:
         header.append(f": {finding.pattern_name}", style="bold white")
 
         panel_content = Text()
-        panel_content.append(f"File: ", style="dim")
+        panel_content.append("File: ", style="dim")
         panel_content.append(f"{finding.file_path}", style="bold")
         panel_content.append(f":{finding.line_number}\n", style="bold")
-        panel_content.append(f"Secret: ", style="dim")
+        panel_content.append("Secret: ", style="dim")
         panel_content.append(f"{finding.masked_secret}\n", style="red")
-        panel_content.append(f"Confidence: ", style="dim")
+        panel_content.append("Confidence: ", style="dim")
         panel_content.append(f"{finding.confidence:.0%}\n", style="white")
 
         # Context
@@ -96,7 +96,7 @@ def _print_findings(result: ScanResult) -> None:
                 panel_content.append(f"  {num:>4} │ {line}\n", style="dim")
 
         if finding.recommendation:
-            panel_content.append(f"\n💡 ", style="bold")
+            panel_content.append("\n💡 ", style="bold")
             panel_content.append(finding.recommendation, style="italic cyan")
 
         console.print(Panel(panel_content, title=str(header), border_style=style, expand=True))
@@ -469,7 +469,7 @@ def uninstall_hook(repo: str) -> None:
         if removed:
             console.print("[bold green]✅ Pre-commit hook removed.[/]")
         else:
-            console.print("[yellow]ℹ️  No secrets-scanner hook found.[/]")
+            console.print("[yellow]i  No secrets-scanner hook found.[/]")
     except FileNotFoundError as exc:
         error_console.print(f"[bold red]❌ Error:[/] {exc}")
         sys.exit(EXIT_ERROR)
@@ -491,8 +491,7 @@ def init(path: str) -> None:
     """
     target = Path(path).resolve() / ".secretsignore"
 
-    if target.exists():
-        if not click.confirm(f".secretsignore already exists at {target}. Overwrite?"):
+    if target.exists() and not click.confirm(f".secretsignore already exists at {target}. Overwrite?"):
             console.print("[dim]Aborted.[/]")
             return
 

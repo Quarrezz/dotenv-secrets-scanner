@@ -9,11 +9,12 @@ Defines all core data structures used throughout the application:
 
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, field
 from enum import IntEnum
-from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    import re
 
 
 class Severity(IntEnum):
@@ -31,7 +32,7 @@ class Severity(IntEnum):
         return self.name
 
     @classmethod
-    def from_string(cls, value: str) -> "Severity":
+    def from_string(cls, value: str) -> Severity:
         """Parse a severity from its string name.
 
         Args:

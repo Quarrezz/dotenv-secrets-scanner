@@ -9,8 +9,10 @@ from __future__ import annotations
 import json
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
-from pathlib import Path
-from typing import TextIO
+from typing import TYPE_CHECKING, TextIO
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 from scanner import __version__
 from scanner.models import Finding, ScanResult, Severity
@@ -161,7 +163,7 @@ class HTMLReportGenerator(ReportGenerator):
 
         counts = result.severity_counts()
         status_class = "success" if not result.has_secrets else "danger"
-        status_text = "Clean ✅" if not result.has_secrets else f"{len(result.findings)} findings 🚨"
+        status_class = "success" if not result.has_secrets else "danger"
 
         html = f"""<!DOCTYPE html>
 <html lang="en">

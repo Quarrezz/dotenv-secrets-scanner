@@ -10,8 +10,10 @@ Handles loading and merging configuration from:
 from __future__ import annotations
 
 import logging
-from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 import yaml
 

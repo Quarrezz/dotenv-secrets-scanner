@@ -12,7 +12,10 @@ Architecture Decision:
 from __future__ import annotations
 
 import re
-from typing import Iterator
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 from scanner.models import SecretPattern, Severity
 
@@ -131,7 +134,8 @@ def _build_default_patterns() -> list[SecretPattern]:
             confidence=0.95,
             description="AWS Access Key ID beginning with AKIA.",
             secret_group=1,
-            false_positive_patterns=_PLACEHOLDER_FP + (
+            false_positive_patterns=(
+                *_PLACEHOLDER_FP,
                 re.compile(r"AKIAIOSFODNN7EXAMPLE", re.IGNORECASE),
             ),
             entropy_threshold=3.0,
@@ -233,7 +237,8 @@ def _build_default_patterns() -> list[SecretPattern]:
             confidence=0.85,
             description="PostgreSQL connection URI with credentials.",
             secret_group=0,
-            false_positive_patterns=_PLACEHOLDER_FP + (
+            false_positive_patterns=(
+                *_PLACEHOLDER_FP,
                 re.compile(r"localhost|127\.0\.0\.1|example\.com|postgres://user:pass@"),
             ),
         ),
@@ -248,7 +253,8 @@ def _build_default_patterns() -> list[SecretPattern]:
             confidence=0.85,
             description="MySQL connection URI with credentials.",
             secret_group=0,
-            false_positive_patterns=_PLACEHOLDER_FP + (
+            false_positive_patterns=(
+                *_PLACEHOLDER_FP,
                 re.compile(r"localhost|127\.0\.0\.1|example\.com|mysql://user:pass@"),
             ),
         ),
@@ -370,7 +376,8 @@ def _build_default_patterns() -> list[SecretPattern]:
             confidence=0.80,
             description="HTTP(S) URL with embedded username:password.",
             secret_group=0,
-            false_positive_patterns=_PLACEHOLDER_FP + (
+            false_positive_patterns=(
+                *_PLACEHOLDER_FP,
                 re.compile(r"user:pass|username:password|admin:admin"),
                 re.compile(r"example\.com|localhost"),
             ),
@@ -469,7 +476,8 @@ def _build_default_patterns() -> list[SecretPattern]:
             confidence=0.55,
             description="Password assigned to a variable or config key.",
             secret_group=1,
-            false_positive_patterns=_PLACEHOLDER_FP + (
+            false_positive_patterns=(
+                *_PLACEHOLDER_FP,
                 re.compile(r"^\*+$"),  # Masked: ****
                 re.compile(r"^password$", re.IGNORECASE),
             ),
@@ -612,7 +620,8 @@ def _build_default_patterns() -> list[SecretPattern]:
             confidence=0.40,
             description="Long hex-encoded string (potential secret/hash).",
             secret_group=1,
-            false_positive_patterns=_PLACEHOLDER_FP + (
+            false_positive_patterns=(
+                *_PLACEHOLDER_FP,
                 re.compile(r"(?:hash|checksum|sha|md5|digest)", re.IGNORECASE),
             ),
             entropy_threshold=3.5,

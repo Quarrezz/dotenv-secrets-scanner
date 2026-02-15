@@ -10,9 +10,12 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from scanner.core import SecretScanner
-from scanner.models import Finding, ScanConfig
+
+if TYPE_CHECKING:
+    from scanner.models import Finding, ScanConfig
 
 logger = logging.getLogger("scanner")
 
@@ -87,9 +90,8 @@ def get_staged_files(repo_path: Path) -> list[Path]:
         for item in repo.index.diff(None):
             if item.a_path:
                 file_path = root / item.a_path
-                if file_path.exists() and file_path.is_file():
-                    if file_path not in files:
-                        files.append(file_path)
+                if file_path.exists() and file_path.is_file() and file_path not in files:
+                    files.append(file_path)
 
         return files
 

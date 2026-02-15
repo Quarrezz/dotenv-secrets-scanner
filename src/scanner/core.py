@@ -9,16 +9,18 @@ Thread-safe design with configurable parallelism for large repositories.
 from __future__ import annotations
 
 import logging
-import os
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from fnmatch import fnmatch
-from pathlib import Path
-from typing import IO
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import re
+    from pathlib import Path
 
 from scanner.entropy import calculate_shannon_entropy
-from scanner.models import Finding, ScanConfig, ScanResult, SecretPattern, Severity
+from scanner.models import Finding, ScanConfig, ScanResult, SecretPattern
 from scanner.patterns import PatternRegistry, create_default_registry
 from scanner.validators import ConfidenceScorer, FalsePositiveFilter
 
@@ -202,7 +204,7 @@ class SecretScanner:
 
     def _process_match(
         self,
-        match: "re.Match[str]",
+        match: re.Match[str],
         pattern: SecretPattern,
         line_content: str,
         line_number: int,
@@ -330,9 +332,11 @@ class SecretScanner:
             return True
 
         # Hidden file check
-        if not self.config.scan_hidden and file_path.name.startswith("."):
-            # Exception: .env files are always scanned
-            if not file_path.name.startswith(".env"):
+        if (
+            not self.config.scan_hidden
+            and file_path.name.startswith(".")
+            and not file_path.name.startswith(".env")
+        ):
                 return True
 
         # Size check
@@ -344,10 +348,7 @@ class SecretScanner:
             return True
 
         # Binary check
-        if self._is_binary(file_path):
-            return True
-
-        return False
+        return bool(self._is_binary(file_path))
 
     @staticmethod
     def _is_binary(file_path: Path) -> bool:
@@ -451,9 +452,11 @@ class SecretScanner:
             # Pattern:file:line format
             if ":" in ignore_pattern:
                 parts = ignore_pattern.split(":", maxsplit=2)
-                if len(parts) >= 2:
-                    if fnmatch(file_path, parts[0]) or parts[0] == "*":
-                        if parts[1] == "*" or parts[1] == str(line_number):
+                if (
+                    len(parts) >= 2
+                    and (fnmatch(file_path, parts[0]) or parts[0] == "*")
+                    and (parts[1] == "*" or parts[1] == str(line_number))
+                ):
                             return True
 
         return False

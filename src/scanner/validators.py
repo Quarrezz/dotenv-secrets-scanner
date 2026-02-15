@@ -13,7 +13,6 @@ from pathlib import Path
 
 from scanner.entropy import calculate_shannon_entropy, entropy_score
 
-
 # ---------------------------------------------------------------------------
 # Well-known placeholder / example values that are NOT secrets
 # ---------------------------------------------------------------------------
