@@ -446,16 +446,7 @@ src/scanner/
 
 ---
 
-## 🚀 Roadmap
-
-- [ ] GitHub App version
-- [ ] Official Docker image
-- [ ] VSCode Extension
-- [ ] SARIF output support
-
----
-
-## 📝 License
+##  License
 
 MIT License — See [LICENSE](LICENSE) file for details.
 
